@@ -1,0 +1,33 @@
+include(CMakeForceCompiler)
+
+set(CMAKE_C_COMPILER_FORCED TRUE)
+set(CMAKE_CXX_COMPILER_FORCED TRUE)
+
+set(CMAKE_AR ar CACHE FILEPATH "Archiver")
+set(CMAKE_C_COMPILER gcc)
+set(CMAKE_CXX_COMPILER g++)
+set(OBJCOPY objcopy)
+set(INC_BUILD ${CMAKE_CURRENT_SOURCE_DIR}/scripts/increment_build.sh)
+
+set(CMAKE_EXE_LINKER_FLAGS -static)
+set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
+set(CMAKE_EXE_LINK_DYNAMIC_C_FLAGS)
+set(CMAKE_EXE_LINK_DYNAMIC_CXX_FLAGS)
+set(CMAKE_SHARED_LIBRARY_C_FLAGS)
+set(CMAKE_SHARED_LIBRARY_CXX_FLAGS)
+set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
+set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
+SET(ASM_OPTIONS "-x assembler-with-cpp")
+SET(CMAKE_ASM_FLAGS "${CFLAGS} ${ASM_OPTIONS}" )
+add_definitions(-D__weak=__attribute__\(\(weak\)\) -D__packed=__attribute__\(\(__packed__\)\))
+set(COMMON_FLAGS "-fsigned-char -ffunction-sections -fdata-sections -g -gdwarf-2 -O2")
+add_definitions(${COMMON_FLAGS})
+set(CMAKE_C_FLAGS "-std=c99")
+set(CMAKE_CXX_FLAGS "-std=c++17")
+
+set(CMAKE_EXE_LINKER_FLAGS "${COMMON_FLAGS} -lc -lm -Wl,--gc-sections" CACHE STRING "linker flags" FORCE)
+
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
